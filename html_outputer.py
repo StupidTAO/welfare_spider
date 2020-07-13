@@ -1,4 +1,5 @@
 import pymysql
+import time
 
 class HtmlOutputer(object):
     def __init__(self):
@@ -79,7 +80,7 @@ class HtmlOutputer(object):
 
     def ouput_walfare_one_fundation_mysql(self):
         # 打开数据库连接
-        db = pymysql.connect("129.28.173.248","root","123qweasd","welfare" )
+        db = pymysql.connect("127.0.0.1","root","123qweasd","welfare" )
         # 使用cursor()方法获取操作游标
         cursor = db.cursor()
         for data in self.datas:
@@ -88,7 +89,7 @@ class HtmlOutputer(object):
                 channel, name, importTime, payTime)\
                 VALUES ('%s', '%s', '%f', '%s', '%s', '%s', '%s')" % \
                 (data["id"], data["intention"], data["amount"], data["channel"],
-                data["name"], data["importTime"], data["time"])
+                data["name"], self.timestampms_to_str(data["importTime"]), self.timestampms_to_str(data["time"]))
             try:
                 # 执行sql语句
                 cursor.execute(sql)
@@ -96,5 +97,10 @@ class HtmlOutputer(object):
                 db.commit()
             except:
                 # 如果发生错误则回滚
-                print("sql db occure error")
+                print("sql db occure error sql is ", sql)
                 db.rollback()
+    def timestampms_to_str(slef, timeStamp):
+        timeStamp = float(int(timeStamp)/1000)
+        timeDate = time.localtime(timeStamp)
+        timeStr = time.strftime("%Y-%m-%d %H:%M:%S", timeDate)
+        return timeStr

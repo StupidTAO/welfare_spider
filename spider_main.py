@@ -44,7 +44,7 @@ class SpiderMain(object):
 
     def crawl_walfare_one_foundation(self, root_url):
         end = "2020-07-12"
-        begin = "2011-01-01"
+        begin = "2011-07-30"
         url = root_url.format(begin, begin)
         begin_date = datetime.datetime.strptime(begin, '%Y-%m-%d')
         delta=datetime.timedelta(days=1)
@@ -54,18 +54,20 @@ class SpiderMain(object):
             try:
                 new_url = self.urls.get_new_url()
                 print("crawl No1")
-                html_cont = self.downloader.download(new_url)
-                list_person = self.parser.parse_one_foundation(html_cont)
-                self.outputer.collect_walfare_data(list_person)
-                print(list_person[0])
-                print("new_url is ", new_url)
-                print("down")
                 if str(begin_date.strftime('%Y-%m-%d')) != end:
                     begin_date += delta
                     begin = str(begin_date.strftime('%Y-%m-%d'))
                     url = root_url.format(begin, begin)
                     self.urls.add_new_url(url)
                     print(str(begin_date.strftime('%Y-%m-%d')))
+                html_cont = self.downloader.download(new_url)
+                list_person = self.parser.parse_one_foundation(html_cont)
+                if list_person == None or len(list_person) == 0 :
+                    continue
+                self.outputer.collect_walfare_data(list_person)
+                print(list_person[0])
+                print("new_url is ", new_url)
+                print("down")
             except Exception as e:
                 logging.warning("crawl walfare failed, err = ", e)
 
