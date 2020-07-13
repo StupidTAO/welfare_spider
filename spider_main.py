@@ -54,10 +54,10 @@ class SpiderMain(object):
             try:
                 new_url = self.urls.get_new_url()
                 print("crawl No1")
-               # html_cont = self.downloader.download(new_url)
-               # list_person = self.parser.parse_welfare(html_cont)
-               # self.outputer.collect_walfare_data(list_person)
-               # print(list_person[0])
+                html_cont = self.downloader.download(new_url)
+                list_person = self.parser.parse_one_foundation(html_cont)
+                self.outputer.collect_walfare_data(list_person)
+                print(list_person[0])
                 print("new_url is ", new_url)
                 print("down")
                 if str(begin_date.strftime('%Y-%m-%d')) != end:
@@ -68,6 +68,8 @@ class SpiderMain(object):
                     print(str(begin_date.strftime('%Y-%m-%d')))
             except Exception as e:
                 logging.warning("crawl walfare failed, err = ", e)
+
+            self.outputer.ouput_walfare_one_fundation_mysql()
 
 if __name__ == "__main__":
     root_url = "https://baike.baidu.com/item/Python/407313"

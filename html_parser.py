@@ -35,3 +35,7 @@ class HtmlParser(object):
         cont = json.loads(html_cont)
         list_person = cont["dataPoints"]["list"]
         return list_person
+    def parse_one_foundation(self, html_cont):
+        cont = json.loads(html_cont)
+        list_person = cont["data"]["data"]
+        return list_person
