@@ -74,8 +74,8 @@ class SpiderMain(object):
             self.outputer.ouput_walfare_one_fundation_mysql()
 
 if __name__ == "__main__":
-    root_url = "https://baike.baidu.com/item/Python/407313"
-    root_url1 = "http://www.onefoundation.cn/xp_api.php?action=searchReqV1&checkCode=&size=1000&startTime={}&endTime={}"
-    root_url2 = "http://www.hhax.org/api/trade/trade/es/front/listByFront?pageNo=1&pageSize=40000&payState=1&startDate=2019-07-01%2000:00:00&endDate=2020-07-01%2000:00:00"
+    root_url = "https://test1"
+    root_url1 = "http://test2"
+    root_url2 = "http://test3"
     obj_spider = SpiderMain()
     obj_spider.crawl_walfare_one_foundation(root_url1)
